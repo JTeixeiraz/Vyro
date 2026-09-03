@@ -66,8 +66,9 @@ img, svg, canvas { display: block; max-width: 100%; }
 
 .fone-casco {
   position: relative;
-  padding: 8px;
-  border-radius: 40px;
+  padding: 7px;
+  /* Menos arredondado: a 40px o casco lia como pílula, não como aparelho. */
+  border-radius: var(--raio-casco, 30px);
   background:
     linear-gradient(160deg, rgb(255 255 255 / 0.22), rgb(255 255 255 / 0) 34%),
     var(--carcaca, #1b1c22);
@@ -81,7 +82,7 @@ img, svg, canvas { display: block; max-width: 100%; }
 .fone-tela {
   position: relative;
   width: 100%;
-  border-radius: 32px;
+  border-radius: var(--raio-tela, 24px);
   overflow: hidden;
   background: #000;
 }

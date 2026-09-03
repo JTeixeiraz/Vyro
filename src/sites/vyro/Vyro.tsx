@@ -206,11 +206,11 @@ export function Vyro() {
             <div className="v-hero-particulas" aria-hidden="true">
               <MarcaParticulas
                 cor="#17150f"
-                quantidade={2600}
+                quantidade={3000}
                 dispersao={1.05}
-                tamanho={0.5}
-                ancoraX={0.7}
-                ancoraY={0.46}
+                tamanho={0.98}
+                ancoraX={0.5}
+                ancoraY={0.47}
                 refCurso={heroAlto}
               />
             </div>
@@ -246,26 +246,6 @@ export function Vyro() {
               </div>
             </div>
 
-            {/* O rodapé do herói: os três produtos já aparecem aqui, com a cor
-                de cada um. Ele dá chão à composição — antes o canto de baixo
-                era só vão morto — e adianta o índice sem repetir a vitrine. */}
-            <div className="v-env v-hero-rodape">
-              <ul className="v-hero-trio">
-                {PRODUTOS.map((prod, i) => (
-                  <li key={prod.id} style={{ ["--acento" as string]: prod.acento }}>
-                    <Link para={`/${prod.slug}`}>
-                      <span className="v-trio-n">{String(i + 1).padStart(2, "0")}</span>
-                      <span className="v-trio-nome">{prod.nome}</span>
-                      <span className="v-trio-tipo">{t(prod.tipo)}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <span className="v-hero-dica" aria-hidden="true">
-                {t(T.expDica)}
-                <i />
-              </span>
-            </div>
           </div>
         </header>
 

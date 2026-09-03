@@ -118,88 +118,33 @@
   top: 0;
   min-height: 100dvh;
   display: grid;
-  /* O conteúdo centraliza na primeira faixa; o rodapé ancora embaixo. */
-  grid-template-rows: 1fr auto;
+  align-content: center;
   padding-top: clamp(88px, 12vh, 120px);
-  /* Espaço para o dique, que é fixo no rodapé da janela: sem isto ele
-     cobria o item do meio do trio. */
-  padding-bottom: clamp(86px, 11vh, 108px);
-}
-.v-hero-grade { align-self: center; }
-
-/* --- o rodapé do herói: os três produtos, com a cor de cada um --- */
-
-.v-hero-rodape {
-  position: relative; z-index: 1;
-  display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
-  padding-top: clamp(18px, 2.4vw, 26px);
-  border-top: 1px solid var(--linha);
+  /* Espaço para o dique, que é fixo no rodapé da janela. */
+  padding-bottom: clamp(72px, 9vh, 96px);
 }
 
-.v-hero-trio { display: flex; flex-wrap: wrap; gap: clamp(20px, 4vw, 64px); }
-.v-hero-trio a {
-  display: grid; grid-template-columns: auto auto; align-items: baseline;
-  column-gap: 9px; row-gap: 2px;
-}
-.v-trio-n { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; color: var(--tinta-3); }
-.v-trio-nome {
-  font-size: clamp(15px, 1.4vw, 18px); font-weight: 600; letter-spacing: -0.025em;
-  transition: color 200ms var(--e);
-}
-/* O ponto de cor é o único lugar do herói onde a cor do produto aparece. */
-.v-trio-nome::after {
-  content: ""; display: inline-block; vertical-align: middle;
-  width: 6px; height: 6px; border-radius: 50%;
-  margin-left: 7px; background: var(--acento);
-}
-.v-trio-tipo {
-  grid-column: 2;
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--tinta-3);
-}
-.v-hero-trio a:hover .v-trio-nome { color: color-mix(in srgb, var(--acento) 55%, var(--tinta)); }
-
-.v-hero-dica {
-  display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--tinta-3); white-space: nowrap;
-}
-.v-hero-dica i {
-  display: block; width: 1px; height: 26px;
-  background: linear-gradient(var(--linha-2), transparent);
-}
-
-@media (max-width: 720px) {
-  .v-hero-rodape { flex-direction: column; align-items: flex-start; gap: 16px; }
-  .v-hero-dica { display: none; }
-  .v-trio-tipo { display: none; }
-}
-
-/* A camada de partículas cobre o herói inteiro — não só uma caixa na coluna
-   da direita — para o desfazimento ter a tela toda para percorrer. O degradê
-   de máscara não esconde nada, só rebaixa a densidade sob o texto para a
-   leitura não competir com o traço; a nuvem continua passando por trás dele. */
+/* A marca em pontos é o fundo do herói: grande, centrada, atrás do texto.
+   Nenhuma máscara recortando — o texto é pesado o bastante para vencer por
+   contraste, e recortar um buraco no meio só apagava a marca. */
 .v-hero-particulas {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(100deg, transparent 0%, rgb(0 0 0 / 0.14) 30%, rgb(0 0 0 / 0.55) 44%, black 60%);
-  mask-image: linear-gradient(100deg, transparent 0%, rgb(0 0 0 / 0.14) 30%, rgb(0 0 0 / 0.55) 44%, black 60%);
+  opacity: 0.34;
 }
 .particulas { width: 100%; height: 100%; }
 .particulas canvas { display: block; }
 
-.v-hero-grade { position: relative; z-index: 1; display: grid; align-items: center; }
-.v-hero-texto { max-width: 46ch; }
-
-@media (max-width: 939px) {
-  .v-hero-particulas {
-    -webkit-mask-image: linear-gradient(190deg, transparent 0%, rgb(0 0 0 / 0.12) 34%, rgb(0 0 0 / 0.6) 54%, black 72%);
-    mask-image: linear-gradient(190deg, transparent 0%, rgb(0 0 0 / 0.12) 34%, rgb(0 0 0 / 0.6) 54%, black 72%);
-    opacity: 0.82;
-  }
+.v-hero-grade {
+  position: relative; z-index: 1;
+  display: grid; justify-items: center;
+  text-align: center;
 }
+.v-hero-texto { display: grid; justify-items: center; max-width: 58ch; }
+
+@media (max-width: 939px) { .v-hero-particulas { opacity: 0.24; } }
 
 .v-eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
@@ -221,10 +166,10 @@
   font-size: clamp(16.5px, 1.35vw, 19px);
   line-height: 1.6;
   color: var(--tinta-2);
-  max-width: 46ch;
+  max-width: 52ch;
 }
 
-.v-acoes { display: flex; flex-wrap: wrap; gap: 11px; margin-top: clamp(28px, 4vw, 40px); }
+.v-acoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 11px; margin-top: clamp(28px, 4vw, 40px); }
 
 /* A marca extrudada fecha a página: assinatura, não herói. */
 .v-assinatura { margin-top: clamp(48px, 8vw, 96px); display: grid; place-items: center; }
@@ -399,14 +344,16 @@
 
 /* --- a moldura inclinada, sangrando pela borda de baixo --- */
 
-/* A moldura é dimensionada para sangrar um pouco pela borda de baixo da linha,
-   não para preencher a linha inteira: o produto entra como objeto apoiado, não
-   como um recorte gigante. */
+/* Só a metade de cima do aparelho aparece, e bem maior: em corpo inteiro e
+   pequeno o celular virava um chaveiro no canto. Aqui ele entra como objeto
+   grande, cortado pela borda de baixo da linha. */
 .vit-palco {
+  --raio-casco: 34px;
+  --raio-tela: 28px;
   position: absolute;
   right: clamp(20px, 7vw, 110px);
-  bottom: clamp(-46px, -3.4vh, -26px);
-  width: clamp(124px, 11.5vw, 164px);
+  bottom: clamp(-320px, -34vh, -230px);
+  width: clamp(220px, 21vw, 300px);
   display: grid; justify-items: center;
   perspective: 1400px;
   opacity: 0;
@@ -420,7 +367,7 @@
   filter: drop-shadow(0 40px 60px rgb(23 21 15 / 0.34));
 }
 /* O Postly é desktop: a janela deita e ocupa mais largura. */
-.vit-linha[data-forma="paisagem"] .vit-palco { width: clamp(280px, 32vw, 460px); bottom: clamp(-40px, -3vh, -20px); }
+.vit-linha[data-forma="paisagem"] .vit-palco { width: clamp(300px, 34vw, 500px); bottom: clamp(-70px, -6vh, -40px); }
 .vit-linha[data-forma="paisagem"] .vit-moldura { transform: rotateY(-13deg) rotateX(9deg) rotate(0.8deg); }
 
 /* O clique vale na linha inteira; o botão fica por cima. */
