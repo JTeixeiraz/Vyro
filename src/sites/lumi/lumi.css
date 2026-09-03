@@ -1,0 +1,312 @@
+/* LUMI — self-care.
+   O único site claro dos quatro, e isso é identidade: o assunto é luz na pele.
+   O que faltava era densidade. Papel quente com fundo de pele, Fraunces em
+   display (o único serif do conjunto — LUMI é editorial, não dashboard) e a
+   pérola em shader como material da marca. */
+
+.l-site {
+  --papel: #f6f2ea;
+  --pele: #efe3d6;
+  --pele-2: #e6d5c3;
+  --tinta: #241c14;
+  --tinta-2: #56483a;
+  --tinta-3: #6b5a48;
+  /* Dois ouros: o claro só em texto de display (o piso lá é 3:1); o forte em
+     tudo que é pequeno ou vira fundo de botão, onde o piso é 4,5:1. */
+  --ouro: #a97f4a;
+  --ouro-forte: #835d2f;
+  --rosa: #e8ccd2;
+  --linha: #e0d4c4;
+  --linha-2: #cdbca7;
+
+  --display: "Fraunces Variable", ui-serif, Georgia, serif;
+  --ui: "Outfit Variable", ui-sans-serif, system-ui, sans-serif;
+  --mono: "JetBrains Mono Variable", ui-monospace, monospace;
+  --e: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --grao-img: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  --grao-op: 0.05;
+  --grao-mix: multiply;
+
+  position: relative;
+  background:
+    radial-gradient(90% 60% at 78% 0%, var(--pele) 0%, transparent 58%),
+    var(--papel);
+  color: var(--tinta);
+  font-family: var(--ui);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.l-env { width: min(1180px, 100% - clamp(32px, 7vw, 88px)); margin-inline: auto; }
+
+.l-site .navb-barra[data-preso] {
+  background: color-mix(in srgb, var(--papel) 84%, transparent);
+  backdrop-filter: blur(14px) saturate(1.2);
+  border-bottom-color: var(--linha);
+}
+.l-site .navb-lingua button { color: var(--tinta-3); }
+.l-site .navb-lingua button:hover { color: var(--tinta); }
+.l-site .navb-lingua button.e-ativa { color: var(--papel); background: var(--ouro-forte); }
+.l-site .wordmark svg { stroke: var(--tinta-3); }
+
+.l-marca { display: inline-flex; align-items: center; gap: 12px; }
+.l-marca i { width: 1px; height: 14px; background: var(--linha-2); }
+.l-marca em { font-family: var(--display); font-style: normal; font-weight: 500; letter-spacing: 0.22em; font-size: 15px; }
+.l-marca .wordmark-texto { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; color: var(--tinta-3); }
+
+/* --- tipografia ----------------------------------------------------------- */
+
+.l-rotulo {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--tinta-3);
+  padding-bottom: 14px; margin-bottom: clamp(26px, 4vw, 42px);
+  border-bottom: 1px solid var(--linha);
+}
+
+.l-h1 {
+  font-family: var(--display);
+  font-size: clamp(40px, 6.4vw, 84px);
+  line-height: 1.02; letter-spacing: -0.028em; font-weight: 500;
+  font-variation-settings: "SOFT" 20, "WONK" 0;
+}
+.l-h1 span, .l-h1 em { display: block; }
+.l-h1 em { font-style: italic; color: var(--ouro); font-variation-settings: "SOFT" 40, "WONK" 1; }
+
+.l-bt {
+  display: inline-flex; align-items: center; gap: 9px;
+  height: 48px; padding-inline: 24px; border-radius: 999px;
+  background: var(--ouro-forte); color: #fff;
+  font-size: 15px; font-weight: 500;
+  transition: transform 140ms var(--e), background 200ms var(--e);
+}
+.l-bt i { font-style: normal; transition: transform 220ms var(--e); }
+.l-bt:hover { background: #6d4c26; }
+.l-bt:hover i { transform: translateY(3px); }
+.l-bt:active { transform: scale(0.98); }
+
+/* --- herói ---------------------------------------------------------------- */
+
+.l-hero { position: relative; overflow: hidden; padding-top: clamp(104px, 16vh, 156px); padding-bottom: clamp(52px, 8vh, 96px); }
+/* Um brilho de fundo que deriva devagar: o herói não é mais uma pintura
+   parada, mesmo antes de qualquer coisa ser tocada ou rolada. */
+.l-hero::before {
+  content: "";
+  position: absolute; z-index: 0;
+  width: 130%; aspect-ratio: 1;
+  top: -32%; right: -22%;
+  background: radial-gradient(circle, var(--rosa) 0%, transparent 62%);
+  opacity: 0.32;
+  animation: l-luz 22s ease-in-out infinite alternate;
+}
+@keyframes l-luz {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(-4%, 3%, 0) scale(1.06); }
+}
+@media (prefers-reduced-motion: reduce) { .l-hero::before { animation: none; } }
+
+.l-hero-grade { position: relative; z-index: 1; display: grid; gap: clamp(30px, 5vw, 56px); align-items: center; }
+@media (min-width: 900px) { .l-hero-grade { grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr); } }
+
+.l-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--tinta-3); margin-bottom: clamp(18px, 2.6vw, 28px);
+}
+.l-sub {
+  margin-top: clamp(20px, 3vw, 30px);
+  font-size: clamp(16.5px, 1.4vw, 19.5px); line-height: 1.62;
+  color: var(--tinta-2); max-width: 40ch;
+}
+.l-acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; margin-top: clamp(26px, 3.6vw, 38px); }
+.l-nota { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--tinta-3); }
+
+/* A pérola ocupa o quadrante direito e respira: é o retrato da marca. Ela se
+   inclina para o ponteiro (--tilt-x/--tilt-y, via JS) como um objeto físico,
+   e dois anéis de sonar pulsam ao redor — a "escuta" que a copy descreve. */
+.l-perola {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  position: relative; display: grid; place-items: center; isolation: isolate;
+  perspective: 900px;
+}
+/* Halo de pele por baixo: sem ele a pérola é pálida demais sobre papel claro. */
+.l-perola-halo {
+  position: absolute; z-index: -1;
+  width: min(560px, 104%); aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle, var(--pele) 0%, color-mix(in srgb, var(--pele) 40%, transparent) 48%, transparent 68%);
+}
+
+.l-sonar {
+  position: absolute; z-index: -1;
+  width: min(430px, 84%); aspect-ratio: 1; border-radius: 50%;
+  border: 1px solid var(--ouro);
+  opacity: 0;
+  animation: l-sonar 5.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+.l-sonar-2 { animation-delay: 2.75s; }
+@keyframes l-sonar {
+  0% { transform: scale(0.72); opacity: 0.34; }
+  100% { transform: scale(1.22); opacity: 0; }
+}
+
+/* A inclinação vive aqui, com transição própria — sem competir com a
+   animação de flutuar, que está um nível abaixo, na imagem. */
+.l-perola-tilt {
+  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+.l-perola-img {
+  width: min(430px, 84%); height: auto;
+  /* O arquivo do app vinha sem alfa e arrastava um retângulo claro atrás. O
+     alfa foi recortado com uma vinheta radial suave, que corta a quina sem
+     deixar anel na borda macia da pérola. */
+  filter: drop-shadow(0 34px 54px rgb(158 112 126 / 0.22));
+  animation: l-boia 12s ease-in-out infinite;
+}
+@keyframes l-boia {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -18px, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .l-perola-img { animation: none; }
+  .l-perola-tilt { transition: none; }
+  .l-sonar { animation: none; display: none; }
+}
+
+/* --- números -------------------------------------------------------------- */
+
+.l-numeros { padding-block: clamp(48px, 7vw, 84px); border-top: 1px solid var(--linha); }
+.l-numeros-grade { display: grid; gap: clamp(24px, 3vw, 40px); }
+@media (min-width: 760px) { .l-numeros-grade { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.l-num strong {
+  display: block; font-family: var(--display); font-weight: 500;
+  font-size: clamp(40px, 5.4vw, 68px); letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px;
+}
+.l-num span { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tinta-3); }
+
+/* --- material ------------------------------------------------------------- */
+
+.l-material {
+  position: relative; overflow: hidden;
+  padding-block: clamp(84px, 12vw, 150px);
+  background: var(--pele); border-block: 1px solid var(--linha);
+}
+/* O mesmo material da pérola, agora em tamanho de faixa: aqui ele tem espaço
+   para formar volume em vez de virar textura suja. */
+.l-material-palco { opacity: 0.45; }
+.l-material-palco canvas { width: 100%; height: 100%; }
+.l-material-grade { position: relative; }
+.l-material-grade { display: grid; gap: 0; }
+@media (min-width: 860px) { .l-material-grade { grid-template-columns: minmax(0, 0.4fr) minmax(0, 1fr); gap: clamp(30px, 5vw, 60px); } }
+.l-material-grade .l-rotulo { border-bottom: none; padding-bottom: 0; margin-bottom: 14px; }
+.l-material-texto {
+  font-family: var(--display); font-weight: 400;
+  font-size: clamp(21px, 2.6vw, 34px); line-height: 1.32; letter-spacing: -0.02em;
+  max-width: 30ch;
+}
+
+/* --- o dia: uma linha do tempo, não um sticky ---------------------------- */
+
+.l-dia { padding-block: clamp(64px, 9vw, 108px); }
+
+.l-rail { position: relative; }
+/* O fio do relógio atravessa as paradas. Fica atrás de tudo e some no fim. */
+.l-rail::before {
+  content: "";
+  position: absolute; top: 8px; bottom: 8px; left: 5px;
+  width: 1px;
+  background: linear-gradient(var(--linha-2), var(--linha-2) 88%, transparent);
+}
+@media (min-width: 900px) { .l-rail::before { left: 71px; } }
+
+.l-parada {
+  position: relative;
+  display: grid;
+  gap: 18px clamp(24px, 4vw, 52px);
+  padding-left: 30px;
+  padding-block: clamp(20px, 2.6vw, 30px);
+}
+@media (min-width: 900px) {
+  .l-parada {
+    grid-template-columns: 96px minmax(0, 1fr) minmax(0, 0.86fr);
+    align-items: center;
+    padding-left: 0;
+  }
+  /* A tela troca de lado a cada parada: o olho não cai no mesmo trilho. */
+  .l-parada-inv .l-parada-texto { order: 3; }
+  .l-parada-inv .l-parada-tela { order: 2; }
+}
+
+.l-parada-marca { position: relative; }
+.l-hora {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em;
+  color: var(--ouro-forte);
+}
+.l-parada-marca i {
+  position: absolute; left: -30px; top: 5px;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--papel);
+  box-shadow: inset 0 0 0 1.5px var(--ouro-forte);
+}
+@media (min-width: 900px) { .l-parada-marca i { left: 67px; top: 4px; } }
+
+/* Ao entrar na tela, o ponto solta um pulso — o instante da parada ficando
+   marcado no fio, uma vez só, não em loop. */
+.l-parada.entrou .l-parada-marca i::after {
+  content: "";
+  position: absolute; inset: -1.5px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ouro-forte);
+  animation: l-marca-pulso 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes l-marca-pulso {
+  0% { transform: scale(1); opacity: 0.9; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .l-parada.entrou .l-parada-marca i::after { display: none; } }
+
+.l-parada-texto h3 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(23px, 2.8vw, 34px); letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 10px;
+}
+.l-parada-texto p { font-size: 15.5px; line-height: 1.62; color: var(--tinta-2); max-width: 34ch; }
+
+.l-parada-tela { display: grid; justify-items: center; }
+@media (min-width: 900px) { .l-parada-tela { justify-items: end; } .l-parada-inv .l-parada-tela { justify-items: start; } }
+
+/* --- privacidade ---------------------------------------------------------- */
+
+.l-priv { padding-block: clamp(64px, 9vw, 104px); border-top: 1px solid var(--linha); }
+.l-priv-grade { display: grid; gap: clamp(24px, 4vw, 52px); }
+@media (min-width: 860px) { .l-priv-grade { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); } }
+.l-priv-titulo {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(28px, 3.8vw, 46px); letter-spacing: -0.028em; line-height: 1.06; max-width: 12ch;
+}
+.l-priv-texto { font-size: clamp(16px, 1.4vw, 18.5px); line-height: 1.64; color: var(--tinta-2); max-width: 50ch; }
+.l-selo {
+  display: inline-block; margin-top: 20px;
+  padding: 8px 15px; border-radius: 999px;
+  background: var(--pele-2); color: var(--tinta-2);
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+}
+
+/* --- rodapé --------------------------------------------------------------- */
+
+.l-rodape { padding-block: 40px 96px; background: var(--pele); border-top: 1px solid var(--linha); }
+.l-rodape-grade { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 28px; }
+.l-rodape-marca { font-family: var(--display); font-weight: 500; letter-spacing: 0.24em; font-size: 17px; }
+.l-rodape nav { display: flex; flex-wrap: wrap; gap: 20px; font-size: 14px; color: var(--tinta-2); }
+.l-rodape nav a:hover { color: var(--ouro-forte); }
+.l-assina { margin-inline-start: auto; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tinta-3); }
+
+/* --- dique ---------------------------------------------------------------- */
+
+.l-site .dique .dock-panel {
+  background: rgb(36 28 20 / 0.82);
+  backdrop-filter: blur(14px) saturate(1.3);
+  border: 1px solid rgb(255 255 255 / 0.12);
+}

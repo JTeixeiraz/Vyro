@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="512" height="512">
+  <!-- VYRO. O V facetado: uma silhueta de escudo, dois vales e as hastes que descem ao mesmo ápice. -->
+  <rect width="100" height="100" rx="22" fill="#09090B"/>
+  <g fill="none" stroke="#C1FF72" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M32 14 L17 26 L17 58 L50 87 L83 58 L83 26 L68 14"/>
+    <path d="M17 26 L50 47 L83 26"/>
+    <path d="M32 14 L50 47 L68 14"/>
+    <path d="M32 14 L50 87 L68 14"/>
+  </g>
+</svg>

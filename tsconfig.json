@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    // Os componentes do React Bits vêm em .jsx; entram no bundle sem passar
+    // pelo checador, que reclamaria de código de terceiro.
+    "allowJs": true,
+    "checkJs": false,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": false,
+    "resolveJsonModule": true
+  },
+  "include": ["src"]
+}

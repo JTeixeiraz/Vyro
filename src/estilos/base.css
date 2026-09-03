@@ -1,0 +1,218 @@
+/* Só o que é verdadeiramente comum aos quatro sites: reset, molduras de
+   aparelho, grão e utilidades de acesso. Cor, tipografia e ritmo pertencem a
+   cada site, porque cada produto tem identidade própria.
+
+   Inter saiu do projeto: é a fonte que faz tudo parecer o mesmo template. Cada
+   site agora carrega só a família que é dele. */
+
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+@import "@fontsource-variable/outfit";
+@import "@fontsource-variable/fraunces";
+@import "@fontsource-variable/jetbrains-mono";
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
+p { margin: 0; text-wrap: pretty; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: none; padding: 0; cursor: pointer; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+img, svg, canvas { display: block; max-width: 100%; }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 3px; }
+
+.pular {
+  position: absolute; left: -9999px; top: 0;
+  padding: 12px 16px; border-radius: 8px; font-weight: 600; z-index: 999;
+  background: #fafafa; color: #09090b;
+}
+.pular:focus { left: 16px; top: 12px; }
+
+/* --- grão -----------------------------------------------------------------
+   Fixo e fora do fluxo do ponteiro: um filtro de ruído sobre um container que
+   rola custa repintura por quadro, e some o 60fps no celular. Aqui ele nunca
+   rola, então a GPU pinta uma vez. */
+
+.grao {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: var(--grao-op, 0.05);
+  mix-blend-mode: var(--grao-mix, multiply);
+  background-image: var(--grao-img);
+  background-size: 180px 180px;
+}
+
+/* --- molduras de aparelho ------------------------------------------------
+   As capturas são reais: saíram de um Galaxy A14 rodando os apps e da máquina
+   rodando o Postly. A proporção da tela vem do arquivo (ver Aparelho.tsx), então
+   nenhuma delas é cortada. */
+
+.fone { position: relative; }
+
+.fone-casco {
+  position: relative;
+  padding: 8px;
+  border-radius: 40px;
+  background:
+    linear-gradient(160deg, rgb(255 255 255 / 0.22), rgb(255 255 255 / 0) 34%),
+    var(--carcaca, #1b1c22);
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 0.5),
+    0 0 0 2px rgb(255 255 255 / 0.06),
+    0 42px 80px -28px rgb(0 0 0 / 0.55),
+    0 8px 24px -12px rgb(0 0 0 / 0.4);
+}
+
+.fone-tela {
+  position: relative;
+  width: 100%;
+  border-radius: 32px;
+  overflow: hidden;
+  background: #000;
+}
+/* A tela tem a proporção exata da captura, então cover não corta nada: só
+   garante que um arredondamento de subpixel não deixe fresta na borda. */
+.fone-tela img { width: 100%; height: 100%; object-fit: cover; }
+
+.fone-ilha {
+  position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+  width: 11px; height: 11px; border-radius: 999px;
+  background: #05050a;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.12);
+}
+
+/* Reflexo diagonal de vidro. Sutil: 6% no ponto mais forte. */
+.fone-vidro {
+  position: absolute; inset: 0;
+  background: linear-gradient(122deg, rgb(255 255 255 / 0.06) 0%, rgb(255 255 255 / 0) 38%);
+  pointer-events: none;
+}
+
+.fone-bt {
+  position: absolute;
+  width: 2px;
+  border-radius: 2px;
+  background: rgb(0 0 0 / 0.35);
+  box-shadow: 1px 0 0 rgb(255 255 255 / 0.07);
+}
+.fone-bt-a { left: -2px; top: 17%; height: 5%; }
+.fone-bt-b { left: -2px; top: 25%; height: 8%; }
+.fone-bt-c { right: -2px; top: 22%; height: 10%; box-shadow: -1px 0 0 rgb(255 255 255 / 0.07); }
+
+.janela {
+  margin: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0e100e;
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 0.09),
+    0 50px 100px -34px rgb(0 0 0 / 0.7);
+}
+.janela-barra {
+  display: flex; align-items: center; gap: 12px; height: 36px; padding-inline: 15px;
+  background: linear-gradient(#1c1f1c, #151815);
+  border-bottom: 1px solid rgb(255 255 255 / 0.07);
+}
+.janela-luzes { display: flex; gap: 7px; }
+.janela-luzes i { width: 10px; height: 10px; border-radius: 999px; background: rgb(255 255 255 / 0.15); }
+.janela-titulo {
+  font-family: "Geist Mono Variable", ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.06em; color: rgb(255 255 255 / 0.42);
+}
+.janela-tela { position: relative; width: 100%; background: #0b0d0b; }
+.janela-tela img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Palco WebGL: sempre atrás do conteúdo e fora do alcance do ponteiro. */
+.palco { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+
+/* --- revelação ao scroll -------------------------------------------------
+   Só transform e opacity, com atraso por índice. O elemento nasce visível: a
+   classe `aguarda` só é aplicada pelo JS, então sem script nada some. */
+
+.aguarda {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+}
+
+.entrou {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1) var(--atraso, 0ms),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1) var(--atraso, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aguarda { opacity: 1; transform: none; }
+  .entrou { transition: none; }
+  .grao { display: none; }
+}
+
+/* --- primitivas de scroll ------------------------------------------------
+   Estrutura compartilhada; cor e tipografia ficam com cada site. */
+
+.painel-palco { perspective: 1400px; }
+.painel-corpo { transform-origin: 50% 0%; will-change: transform; }
+
+.historia { position: relative; display: grid; gap: 40px; }
+@media (min-width: 900px) {
+  .historia { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(40px, 6vw, 88px); align-items: start; }
+}
+
+.historia-lista { display: grid; gap: clamp(56px, 22vh, 180px); padding-block: clamp(20px, 8vh, 90px); }
+.historia-passo { max-width: 40ch; }
+
+.historia-fixa { position: relative; }
+@media (min-width: 900px) {
+  /* A coluna direita fica presa enquanto os passos passam pela esquerda. */
+  .historia-fixa { position: sticky; top: 10vh; height: 80vh; display: grid; place-items: center; }
+}
+
+.historia-quadro { position: relative; width: 100%; height: 100%; display: grid; place-items: center; }
+.historia-quadro > * {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+  will-change: opacity;
+}
+
+/* --- galeria horizontal ---------------------------------------------------
+   O scroll vertical vira deslocamento lateral. A trilha é dimensionada em CSS
+   e só `transform` anima, então nada é medido por quadro. */
+
+.galeria { position: relative; }
+.galeria-fixa {
+  position: sticky; top: 0;
+  height: 100dvh;
+  display: flex; align-items: center;
+  overflow: hidden;
+}
+.galeria-trilha {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(24px, 4vw, 60px);
+  padding-inline: clamp(24px, 8vw, 140px);
+  will-change: transform;
+}
+
+/* Sem script de movimento, a mesma trilha vira uma faixa que se arrasta. */
+.galeria-simples { overflow-x: auto; scroll-snap-type: x mandatory; }
+.galeria-simples .galeria-trilha { padding-block: 32px; }
+.galeria-simples .galeria-trilha > * { scroll-snap-align: center; }
