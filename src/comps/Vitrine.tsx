@@ -25,7 +25,11 @@ export type ItemVitrine = {
   /** Cor do produto, usada no fio e no rótulo. */
   acento: string;
   tipo: string;
+  /** A frase curta, que fica grande. */
   resumo: string;
+  /** O parágrafo, que só aparece com a linha aberta. */
+  detalhe: string;
+  stack: string[];
   cta: string;
   /** A captura que entra na moldura inclinada. */
   captura: string;
@@ -106,6 +110,12 @@ export function Vitrine({ itens, className }: Props) {
 
               <div className="vit-corpo">
                 <p className="vit-texto">{it.resumo}</p>
+                <p className="vit-detalhe">{it.detalhe}</p>
+                <ul className="vit-stack">
+                  {it.stack.map((tec) => (
+                    <li key={tec}>{tec}</li>
+                  ))}
+                </ul>
                 <Link className="vit-bt" para={`/${it.slug}`}>
                   {it.cta}
                   <i aria-hidden="true">→</i>

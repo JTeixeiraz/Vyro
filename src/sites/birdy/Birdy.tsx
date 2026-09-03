@@ -136,8 +136,6 @@ const T = {
         b("Flock management", "Gestão de plantel"),
         b("Individual record as PDF", "Ficha individual em PDF"),
         b("Egg management", "Gestão de ovos"),
-        b("Genetics calculator: 15 runs a month", "Calculadora genética: 15 cálculos por mês"),
-        b("WhatsApp listings: 15 a month", "Venda por WhatsApp: 15 anúncios por mês"),
       ],
     },
     {
@@ -151,7 +149,7 @@ const T = {
         b("Cash flow", "Fluxo de caixa"),
         b("Hatchery and gestation analysis", "Chocadouro e análise de gestação"),
         b("Supplies management", "Gestão de insumos"),
-        b("Genetics calculator and listings, no limit", "Calculadora e anúncios sem limite"),
+        b("Selling over WhatsApp", "Venda por WhatsApp"),
       ],
     },
     {
@@ -161,6 +159,7 @@ const T = {
       teto: b("Unlimited birds", "Aves ilimitadas"),
       itens: [
         b("Everything in Pro", "Tudo do plano Pro"),
+        b("Genetics calculator", "Calculadora genética"),
         b("The desktop app", "O aplicativo de desktop"),
         b("Income statement and bulk entry", "DRE e lançamento em massa"),
         b("Early access to new releases", "Atualizações exclusivas"),

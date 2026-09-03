@@ -92,31 +92,6 @@ const COMO = [
   },
 ];
 
-/** A arte de cada produto no bloco dedicado: o aparelho certo para a plataforma. */
-function Arte({ id }: { id: string }) {
-  if (id === "birdy") {
-    return (
-      <div className="v-arte-par">
-        <Fone src={arq("/telas/birdy/home.webp")} alt="Birdy — plantel" {...dim(TELA.birdy)} escala="min(240px, 58vw)" carcaca="#10231a" />
-        <Fone src={arq("/telas/birdy/caixa.webp")} alt="Birdy — caixa" {...dim(TELA.birdy)} escala="min(200px, 48vw)" carcaca="#10231a" className="v-arte-atras" />
-      </div>
-    );
-  }
-  if (id === "lumi") {
-    return (
-      <div className="v-arte-par">
-        <Fone src={arq("/telas/lumi/analise.webp")} alt="LUMI — análise de pele" {...dim(TELA.lumi)} escala="min(240px, 58vw)" carcaca="#2b2118" />
-        <Fone src={arq("/telas/lumi/rotina.webp")} alt="LUMI — rotina" {...dim(TELA.lumi)} escala="min(200px, 48vw)" carcaca="#2b2118" className="v-arte-atras" />
-      </div>
-    );
-  }
-  return <Janela src={arq("/telas/postly/campanha.webp")} alt="Postly — campanha" {...dim(TELA.postly)} titulo="postly" />;
-}
-
-function dim(t: { l: number; a: number }) {
-  return { largura: t.l, altura: t.a };
-}
-
 export function Vyro() {
   const { t } = useLingua();
   const hero = useAoEntrar<HTMLDivElement>({ filhos: ".v-sobe", passo: 80 });
@@ -152,6 +127,8 @@ export function Vyro() {
           acento: p.acento,
           tipo: t(p.tipo),
           resumo: t(p.tagline),
+          detalhe: t(p.resumo),
+          stack: p.stack.slice(0, 4),
           cta: `${t(T.abrir)} ${p.nome}`,
           captura,
           largura: medida.l,
@@ -319,13 +296,6 @@ export function Vyro() {
           <Vitrine itens={itensVitrine} />
         </section>
 
-        {/* ---------- um bloco por produto, no campo de cor do produto ---------- */}
-        <section className="v-produtos">
-          {PRODUTOS.map((p, i) => (
-            <BlocoProduto key={p.id} p={p} invertido={i % 2 === 1} />
-          ))}
-        </section>
-
         {/* ---------- como funciona: editorial denso, régua de 1px, sem card ---------- */}
         <section className="v-como" ref={como}>
           <div className="v-env">
@@ -387,41 +357,5 @@ export function Vyro() {
 
       <Dique />
     </div>
-  );
-}
-
-function BlocoProduto({ p, invertido }: { p: (typeof PRODUTOS)[number]; invertido: boolean }) {
-  const { t } = useLingua();
-  const ref = useAoEntrar<HTMLElement>({ filhos: ".v-pb-anima", passo: 90, limiar: 0.12 });
-
-  return (
-    <article
-      className={`v-pb${invertido ? " v-pb-inv" : ""}`}
-      ref={ref}
-      style={{ ["--acento" as string]: p.acento }}
-    >
-      <div className="v-env v-pb-grade">
-        <div className="v-pb-texto">
-          <p className="v-pb-tipo v-pb-anima">
-            {t(p.tipo)} · {p.desde}
-          </p>
-          <h2 className="v-pb-nome v-pb-anima">{p.nome}</h2>
-          <p className="v-pb-tag v-pb-anima">{t(p.tagline)}</p>
-          <p className="v-pb-resumo v-pb-anima">{t(p.resumo)}</p>
-          <ul className="v-pb-stack v-pb-anima">
-            {p.stack.slice(0, 4).map((s) => (
-              <li key={s}>{s}</li>
-            ))}
-          </ul>
-          <Link className="v-bt v-bt-cheio v-pb-anima" para={`/${p.slug}`}>
-            {p.nome === "Postly" ? "Open Postly" : `Open ${p.nome}`}
-            <i aria-hidden="true">→</i>
-          </Link>
-        </div>
-        <div className="v-pb-arte v-pb-anima">
-          <Arte id={p.id} />
-        </div>
-      </div>
-    </article>
   );
 }
