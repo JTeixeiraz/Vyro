@@ -206,7 +206,7 @@ export function Vyro() {
             <div className="v-hero-particulas" aria-hidden="true">
               <MarcaParticulas
                 cor="#17150f"
-                quantidade={3000}
+                quantidade={3400}
                 dispersao={1.05}
                 tamanho={0.98}
                 ancoraX={0.5}
@@ -223,8 +223,9 @@ export function Vyro() {
                 </p>
                 <h1 className="v-h1 v-sobe">
                   <span>{t(T.titulo1)}</span>
-                  <span>{t(T.titulo2)}</span>
-                  <em>{t(T.titulo3)}</em>
+                  <span>
+                    {t(T.titulo2)} <em>{t(T.titulo3)}</em>
+                  </span>
                 </h1>
                 <p className="v-lead v-sobe">{t(T.sub)}</p>
                 <div className="v-acoes v-sobe">

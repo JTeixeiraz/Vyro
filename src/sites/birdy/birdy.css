@@ -311,3 +311,68 @@
   font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--lime);
 }
+
+/* --- a venda: o fim do ciclo ---------------------------------------------- */
+
+.b-venda { padding-block: clamp(60px, 8vw, 100px); }
+.b-venda-grade { display: grid; gap: clamp(30px, 5vw, 64px); align-items: start; }
+@media (min-width: 900px) { .b-venda-grade { grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); } }
+.b-venda-texto { font-size: clamp(15.5px, 1.35vw, 18px); line-height: 1.62; color: var(--tinta-2); max-width: 44ch; }
+
+.b-fluxo-venda { border-top: 1px solid var(--linha-2); }
+.b-fluxo-venda li {
+  display: grid; grid-template-columns: 4ch 1fr; align-items: baseline; gap: 16px;
+  padding-block: 15px;
+  border-bottom: 1px solid var(--linha);
+  font-size: 15.5px;
+}
+.b-fluxo-n { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--lime); }
+
+/* --- planos --------------------------------------------------------------- */
+
+.b-planos {
+  padding-block: clamp(64px, 9vw, 108px);
+  background: linear-gradient(180deg, var(--casca), var(--noite));
+  border-top: 1px solid var(--linha);
+}
+.b-planos-grade { display: grid; gap: clamp(14px, 2vw, 20px); }
+@media (min-width: 860px) { .b-planos-grade { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; } }
+
+.b-plano {
+  padding: clamp(24px, 3vw, 34px);
+  border-radius: 18px;
+  border: 1px solid var(--linha-2);
+  background: rgb(232 242 230 / 0.03);
+}
+/* O Pro é o plano que o app marca como popular; a borda em lime diz isso sem
+   precisar de selo. */
+.b-plano[data-destaque] {
+  border-color: color-mix(in srgb, var(--lime) 55%, transparent);
+  background: color-mix(in srgb, var(--lime) 7%, transparent);
+}
+.b-plano-nome { font-size: clamp(20px, 2.2vw, 25px); font-weight: 600; letter-spacing: -0.03em; }
+.b-plano-preco {
+  display: flex; align-items: baseline; gap: 5px;
+  margin-block: 10px 4px;
+  font-size: clamp(30px, 3.6vw, 42px); font-weight: 600; letter-spacing: -0.04em; line-height: 1;
+}
+.b-plano-preco span { font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--tinta-3); letter-spacing: 0.04em; }
+.b-plano-teto {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--tinta-3); padding-bottom: 18px; margin-bottom: 18px;
+  border-bottom: 1px solid var(--linha);
+}
+.b-plano-itens { display: grid; gap: 10px; }
+.b-plano-itens li {
+  position: relative; padding-left: 20px;
+  font-size: 14.5px; line-height: 1.5; color: var(--tinta-2);
+}
+.b-plano-itens li::before {
+  content: ""; position: absolute; left: 0; top: 8px;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: color-mix(in srgb, var(--lime) 70%, transparent);
+}
+.b-planos-nota {
+  margin-top: clamp(24px, 3vw, 32px);
+  font-size: 14.5px; line-height: 1.6; color: var(--tinta-3); max-width: 62ch;
+}

@@ -106,6 +106,67 @@ const T = {
 
   fecharTitulo: b("Free, Pro and Ultra", "Free, Pro e Ultra"),
   fecharTexto: b("Android, iOS and Windows. The desktop is Ultra only.", "Android, iOS e Windows. O desktop é exclusivo Ultra."),
+
+  vendaRotulo: b("The sale", "A venda"),
+  vendaTitulo: b("Selling is part of breeding", "Vender faz parte de criar"),
+  vendaTexto: b(
+    "A bird leaves the aviary through WhatsApp, not through a marketplace. Birdy assembles the listing with lineage, photos and price, and writes the sale into the cash flow on the same tap.",
+    "A ave sai do aviário pelo WhatsApp, não por um marketplace. O Birdy monta o anúncio com linhagem, fotos e preço, e lança a venda no fluxo de caixa no mesmo toque.",
+  ),
+  vendaPassos: [
+    b("Pick the bird from the flock", "Escolhe a ave no plantel"),
+    b("The listing writes itself, with the lineage", "O anúncio se escreve, com a linhagem"),
+    b("Send it on WhatsApp", "Manda no WhatsApp"),
+    b("The sale lands in the cash flow", "A venda cai no fluxo de caixa"),
+  ],
+
+  planosRotulo: b("Plans", "Planos"),
+  planosTitulo: b("What each plan unlocks", "O que cada plano libera"),
+  planosNota: b(
+    "Going over the limit deletes nothing: the extra bird shows with a padlock and comes back whole when the plan goes up.",
+    "Passar do teto não apaga nada: a ave excedente aparece com cadeado e volta inteira quando o plano sobe.",
+  ),
+  planos: [
+    {
+      nome: "Free",
+      preco: b("R$ 0", "R$ 0"),
+      periodo: b("", ""),
+      teto: b("Up to 10 birds", "Até 10 aves"),
+      itens: [
+        b("Flock management", "Gestão de plantel"),
+        b("Individual record as PDF", "Ficha individual em PDF"),
+        b("Egg management", "Gestão de ovos"),
+        b("Genetics calculator: 15 runs a month", "Calculadora genética: 15 cálculos por mês"),
+        b("WhatsApp listings: 15 a month", "Venda por WhatsApp: 15 anúncios por mês"),
+      ],
+    },
+    {
+      nome: "Pro",
+      preco: b("R$ 35", "R$ 35"),
+      periodo: b("/month", "/mês"),
+      teto: b("Up to 40 birds", "Até 40 aves"),
+      destaque: true,
+      itens: [
+        b("Everything in Free", "Tudo do plano Free"),
+        b("Cash flow", "Fluxo de caixa"),
+        b("Hatchery and gestation analysis", "Chocadouro e análise de gestação"),
+        b("Supplies management", "Gestão de insumos"),
+        b("Genetics calculator and listings, no limit", "Calculadora e anúncios sem limite"),
+      ],
+    },
+    {
+      nome: "Ultra",
+      preco: b("R$ 60", "R$ 60"),
+      periodo: b("/month", "/mês"),
+      teto: b("Unlimited birds", "Aves ilimitadas"),
+      itens: [
+        b("Everything in Pro", "Tudo do plano Pro"),
+        b("The desktop app", "O aplicativo de desktop"),
+        b("Income statement and bulk entry", "DRE e lançamento em massa"),
+        b("Early access to new releases", "Atualizações exclusivas"),
+      ],
+    },
+  ],
 };
 
 /** Um exemplo real do simulador: as duas aves do plantel de teste. */
@@ -128,6 +189,8 @@ export function Birdy() {
   const metricas = useAoEntrar<HTMLElement>({ filhos: ".b-metrica", passo: 80 });
   const especies = useAoEntrar<HTMLUListElement>({ filhos: "li", passo: 45 });
   const cruza = useAoEntrar<HTMLElement>({ filhos: ".b-anima", passo: 90 });
+  const venda = useAoEntrar<HTMLElement>({ filhos: ".b-anima-venda", passo: 80 });
+  const planos = useAoEntrar<HTMLElement>({ filhos: ".b-anima-plano", passo: 100 });
 
   return (
     <div className="b-site">
@@ -352,6 +415,52 @@ export function Birdy() {
                 decoding="async"
               />
             </figure>
+          </div>
+        </section>
+
+        {/* A venda: o fim do ciclo que o app cobre, e o que separa o Birdy de
+            uma planilha — a ave sai pelo WhatsApp e a venda entra no caixa. */}
+        <section className="b-venda" ref={venda}>
+          <div className="b-env b-venda-grade">
+            <div>
+              <p className="b-rotulo">{t(T.vendaRotulo)}</p>
+              <h2 className="b-h2">{t(T.vendaTitulo)}</h2>
+              <p className="b-venda-texto">{t(T.vendaTexto)}</p>
+            </div>
+            <ol className="b-fluxo-venda">
+              {T.vendaPassos.map((passo, i) => (
+                <li key={passo.en} className="b-anima-venda">
+                  <span className="b-fluxo-n">{String(i + 1).padStart(2, "0")}</span>
+                  <span>{t(passo)}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        {/* Os planos, com os tetos que o app realmente aplica. */}
+        <section className="b-planos" ref={planos}>
+          <div className="b-env">
+            <p className="b-rotulo">{t(T.planosRotulo)}</p>
+            <h2 className="b-h2">{t(T.planosTitulo)}</h2>
+            <div className="b-planos-grade">
+              {T.planos.map((pl) => (
+                <article key={pl.nome} className="b-plano b-anima-plano" data-destaque={pl.destaque || undefined}>
+                  <h3 className="b-plano-nome">{pl.nome}</h3>
+                  <p className="b-plano-preco">
+                    {t(pl.preco)}
+                    <span>{t(pl.periodo)}</span>
+                  </p>
+                  <p className="b-plano-teto">{t(pl.teto)}</p>
+                  <ul className="b-plano-itens">
+                    {pl.itens.map((item) => (
+                      <li key={item.en}>{t(item)}</li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+            <p className="b-planos-nota">{t(T.planosNota)}</p>
           </div>
         </section>
 

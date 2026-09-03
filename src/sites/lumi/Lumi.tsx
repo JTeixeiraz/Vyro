@@ -76,6 +76,45 @@ const T = {
     "Quando a análise passou para o servidor, três telas ainda prometiam que a foto nunca saía do aparelho. Isso foi corrigido nos nove idiomas.",
   ),
   privSelo: b("Written on the screen, not in a policy page", "Escrito na tela, não numa página de política"),
+
+  prateleiraRotulo: b("The shelf", "A prateleira"),
+  prateleiraTitulo: b("The shelf comes before the recommendation", "A prateleira vem antes da recomendação"),
+  prateleiraTexto: b(
+    "Most apps recommend a product to buy. LUMI starts from what you already own, reads the INCI list, and flags the combinations that cancel each other out before suggesting anything new.",
+    "A maioria dos aplicativos recomenda um produto para comprar. A LUMI parte do que você já tem, lê a lista INCI e aponta as combinações que se anulam antes de sugerir qualquer coisa nova.",
+  ),
+  prateleiraPassos: [
+    {
+      t: b("It reads what is already there", "Ela lê o que já está lá"),
+      d: b("The label, not a catalogue: the INCI list of the products on your shelf.", "O rótulo, não um catálogo: a lista INCI dos produtos da sua prateleira."),
+    },
+    {
+      t: b("It says what cancels out", "Ela diz o que se anula"),
+      d: b("Two actives that undo each other in the same routine, before you buy a third.", "Dois ativos que se desfazem na mesma rotina, antes de você comprar um terceiro."),
+    },
+    {
+      t: b("Only then does it suggest", "Só então ela sugere"),
+      d: b("A new product enters the routine when the shelf cannot answer, not before.", "Um produto novo entra na rotina quando a prateleira não dá conta, não antes."),
+    },
+  ],
+
+  idiomasRotulo: b("Nine languages", "Nove idiomas"),
+  idiomasTitulo: b("Asia first, and that is not a figure of speech", "A Ásia primeiro, e isso não é força de expressão"),
+  idiomasTexto: b(
+    "Seven of the nine languages LUMI ships in are Asian. The app was not translated outward from Portuguese — it was built for the markets where skincare routines have the most steps.",
+    "Sete dos nove idiomas em que a LUMI é publicada são asiáticos. O app não foi traduzido do português para fora — ele foi feito para os mercados onde a rotina de skincare tem mais passos.",
+  ),
+  idiomas: [
+    { cod: "ZH", nome: b("Chinese, simplified", "Chinês simplificado") },
+    { cod: "ZH-HANT", nome: b("Chinese, traditional", "Chinês tradicional") },
+    { cod: "JA", nome: b("Japanese", "Japonês") },
+    { cod: "KO", nome: b("Korean", "Coreano") },
+    { cod: "TH", nome: b("Thai", "Tailandês") },
+    { cod: "VI", nome: b("Vietnamese", "Vietnamita") },
+    { cod: "ID", nome: b("Indonesian", "Indonésio") },
+    { cod: "EN", nome: b("English", "Inglês") },
+    { cod: "PT", nome: b("Portuguese", "Português") },
+  ],
 };
 
 export function Lumi() {
@@ -84,6 +123,8 @@ export function Lumi() {
   const hero = useAoEntrar<HTMLElement>({ filhos: ".l-sobe", passo: 110, limiar: 0 });
   const numeros = useAoEntrar<HTMLElement>({ filhos: ".l-num", passo: 90 });
   const dia = useAoEntrar<HTMLElement>({ filhos: ".l-anima", passo: 110, limiar: 0.1 });
+  const prateleira = useAoEntrar<HTMLElement>({ filhos: ".l-anima-pr", passo: 100 });
+  const idiomas = useAoEntrar<HTMLElement>({ filhos: ".l-anima-idi", passo: 55 });
   const perola = useRef<HTMLDivElement>(null);
 
   // A pérola se inclina para o ponteiro, como um objeto físico sob a mão —
@@ -260,6 +301,51 @@ export function Lumi() {
                 </li>
               ))}
             </ol>
+          </div>
+        </section>
+
+        {/* A prateleira: o que separa a LUMI de um catálogo de recomendação.
+            Vem antes da privacidade porque é a promessa central do produto. */}
+        <section className="l-prateleira" ref={prateleira}>
+          <div className="l-env">
+            <p className="l-rotulo">{t(T.prateleiraRotulo)}</p>
+            <div className="l-prateleira-grade">
+              <div>
+                <h2 className="l-prateleira-titulo">{t(T.prateleiraTitulo)}</h2>
+                <p className="l-prateleira-texto">{t(T.prateleiraTexto)}</p>
+              </div>
+              <ol className="l-prateleira-passos">
+                {T.prateleiraPassos.map((pp, i) => (
+                  <li key={pp.t.en} className="l-anima-pr">
+                    <span className="l-pr-n">{String(i + 1).padStart(2, "0")}</span>
+                    <div>
+                      <h3>{t(pp.t)}</h3>
+                      <p>{t(pp.d)}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        {/* Os nove idiomas, nomeados: "Ásia primeiro" vira verificável quando
+            sete dos nove estão escritos na tela. */}
+        <section className="l-idiomas" ref={idiomas}>
+          <div className="l-env l-idiomas-grade">
+            <div>
+              <p className="l-rotulo">{t(T.idiomasRotulo)}</p>
+              <h2 className="l-idiomas-titulo">{t(T.idiomasTitulo)}</h2>
+              <p className="l-idiomas-texto">{t(T.idiomasTexto)}</p>
+            </div>
+            <ul className="l-idiomas-lista">
+              {T.idiomas.map((idi) => (
+                <li key={idi.cod} className="l-anima-idi">
+                  <span className="l-idi-cod">{idi.cod}</span>
+                  <span className="l-idi-nome">{t(idi.nome)}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
